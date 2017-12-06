@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(libllxtrxdsp C)
+project(libxtrxdsp C)
 
 # Set the version information here
 set(MAJOR_VERSION 0)
@@ -49,10 +49,11 @@ else()
     message(WARNING "Unknown system type is ${CMAKE_SYSTEM_NAME}")
 endif()
 
-include_directories(linux)
 add_definitions(-Wall -g)
 
-set(BUILD_SHARED_LIBS ON)
+set(XTRXDSP_LIBRARY_DIR      lib${LIB_SUFFIX})
+set(XTRXDSP_INCLUDE_DIR      include)
+set(XTRXDSP_UTILS_DIR        ${XTRXDSP_LIBRARY_DIR}/xtrxdsp)
 
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/libxtrxdsp.pc.in
@@ -60,18 +61,14 @@ CONFIGURE_FILE(
 @ONLY)
 
 INSTALL(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/libxtrxdsp.pc
-    DESTINATION ${XTRX_LIBRARY_DIR}/pkgconfig
+	FILES ${CMAKE_CURRENT_BINARY_DIR}/libxtrxdsp.pc
+	DESTINATION ${XTRXDSP_LIBRARY_DIR}/pkgconfig
 )
 
 # Report all undfined symbols in shared libraries
 if(CMAKE_COMPILER_IS_GNUCC)
     add_definitions("-Wl,-z,defs")
 endif(CMAKE_COMPILER_IS_GNUCC)
-
-set(XTRXDSP_LIBRARY_DIR      lib${LIB_SUFFIX})
-set(XTRXDSP_INCLUDE_DIR      include)
-set(XTRXDSP_UTILS_DIR        ${XTRXDSP_LIBRARY_DIR}/xtrxdsp)
 
 ########################################################################
 # Build DSP library
@@ -129,4 +126,4 @@ set(CPACK_SET_DESTDIR               "")
 set(CPACK_PACKAGING_INSTALL_PREFIX  "/usr")
 set(CPACK_PACKAGE_CONTACT           "Sergey Kostanbaev <sergey.kostanbaev@fairwaves.co>")
 
-
+include(CPack) #include last
