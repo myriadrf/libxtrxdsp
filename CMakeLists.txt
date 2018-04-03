@@ -11,6 +11,10 @@ set(LIBVER  "${MAJOR_VERSION}.${API_COMPAT}.${MINOR_VERSION}")
 
 # determine target architecture
 execute_process(COMMAND ${CMAKE_C_COMPILER} -print-multiarch OUTPUT_VARIABLE CC_ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(CC_ARCH STREQUAL "")
+  message(STATUS "CC_ARCH unset, guesing using uname -p")
+  execute_process(COMMAND uname -p OUTPUT_VARIABLE CC_ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+endif()
 if(CC_ARCH MATCHES "i386")
     message(STATUS "Building for i386")
     set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
