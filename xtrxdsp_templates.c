@@ -102,6 +102,20 @@ void xtrxdsp_iq16_sc32i_template(const int16_t *__restrict iq,
 }
 #endif
 
+#ifdef XTRXDSP_TEMPLATE_IQ16_IC16I
+static inline
+void xtrxdsp_iq16_ic16i_template(const int16_t *__restrict iq,
+								 int16_t *__restrict outa,
+								 int16_t *__restrict outb,
+								 size_t bytes)
+{
+	for (; bytes > 3; bytes -= 4) {
+		*(outa++) = *(iq++);
+		*(outb++) = *(iq++);
+	}
+}
+#endif
+
 #ifdef XTRXDSP_TEMPLATE_IQ12_SC32
 static inline
 uint64_t xtrxdsp_iq12_sc32_template(const void *__restrict iq,
@@ -792,6 +806,19 @@ void xtrxdsp_sc32i_iq16_template(const float *__restrict i,
 }
 #endif
 
+#ifdef XTRXDSP_TEMPLATE_IC16I_IQ16
+static inline
+void xtrxdsp_ic16i_iq16_template(const int16_t *__restrict i,
+								 const int16_t *__restrict q,
+								 int16_t *__restrict out,
+								 size_t outbytes)
+{
+	for (; outbytes > 3; outbytes -= 4) {
+		*out++ = *i++;
+		*out++ = *q++;
+	}
+}
+#endif
 
 
 

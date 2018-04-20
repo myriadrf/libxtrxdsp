@@ -25,11 +25,14 @@ typedef uint64_t (*func_xtrxdsp_iq12_sc32_t)(const void *__restrict,float *__res
 typedef void (*func_xtrxdsp_iq8_sc32_t)(const int8_t *__restrict,float *__restrict, size_t);
 
 typedef void (*func_xtrxdsp_iq16_sc32i_t)(const int16_t *__restrict, float *__restrict, float *__restrict, float, size_t);
-typedef void (*func_xtrxdsp_iq8_sc32i_t)(const int8_t *__restrict,float *__restrict,float *__restrict, size_t);
+typedef void (*func_xtrxdsp_iq16_ic16i_t)(const int16_t *__restrict, int16_t *__restrict, int16_t *__restrict, size_t);
 
+typedef void (*func_xtrxdsp_iq8_sc32i_t)(const int8_t *__restrict,float *__restrict,float *__restrict, size_t);
 
 typedef void (*func_xtrxdsp_sc32_iq16_t)(const float *__restrict, int16_t *__restrict, float, size_t);
 typedef void (*func_xtrxdsp_sc32i_iq16_t)(const float *__restrict i, const float *__restrict, int16_t *__restrict, float, size_t);
+
+typedef void (*func_xtrxdsp_ic16i_iq16_t)(const int16_t *__restrict i, const int16_t *__restrict, int16_t *__restrict, size_t);
 
 #ifndef NOPRINT
 #include <stdio.h>
@@ -206,6 +209,15 @@ static func_xtrxdsp_iq16_sc32i_t resolve_xtrxdsp_iq16_sc32i(void)
 	SELECT_FUNC("generic", xtrxdsp_iq16_sc32i, no);
 }
 
+static func_xtrxdsp_iq16_ic16i_t resolve_xtrxdsp_iq16_ic16i(void)
+{
+	xtrxdsp_init();
+	CHECK_FUNC_AVX2(xtrxdsp_iq16_ic16i);
+	CHECK_FUNC_AVX(xtrxdsp_iq16_ic16i);
+	CHECK_FUNC_SSE2(xtrxdsp_iq16_ic16i);
+	SELECT_FUNC("generic", xtrxdsp_iq16_ic16i, no);
+}
+
 static func_xtrxdsp_iq8_sc32i_t resolve_xtrxdsp_iq8_sc32i(void)
 {
 	xtrxdsp_init();
@@ -232,6 +244,15 @@ static func_xtrxdsp_sc32i_iq16_t resolve_xtrxdsp_sc32i_iq16(void)
 	CHECK_FUNC_AVX(xtrxdsp_sc32i_iq16);
 	CHECK_FUNC_SSE2(xtrxdsp_sc32i_iq16);
 	SELECT_FUNC("generic", xtrxdsp_sc32i_iq16, no);
+}
+
+static func_xtrxdsp_ic16i_iq16_t resolve_xtrxdsp_ic16i_iq16(void)
+{
+	xtrxdsp_init();
+	CHECK_FUNC_AVX2(xtrxdsp_ic16i_iq16);
+	CHECK_FUNC_AVX(xtrxdsp_ic16i_iq16);
+	CHECK_FUNC_SSE2(xtrxdsp_ic16i_iq16);
+	SELECT_FUNC("generic", xtrxdsp_ic16i_iq16, no);
 }
 
 func_xtrxdsp_sc32_conv64_t resolve_xtrxdsp_sc32_conv64(void)
@@ -293,6 +314,9 @@ static func_xtrxdsp_iq8_sc32_t resolve_xtrxdsp_iq8_sc32(void)
 static func_xtrxdsp_iq16_sc32i_t resolve_xtrxdsp_iq16_sc32i(void)
 { SELECT_FUNC("generic", xtrxdsp_iq16_sc32i, no); }
 
+static func_xtrxdsp_iq16_ic16i_t resolve_xtrxdsp_iq16_ic16i(void)
+{ SELECT_FUNC("generic", xtrxdsp_iq16_ic16i, no); }
+
 static func_xtrxdsp_iq8_sc32i_t resolve_xtrxdsp_iq8_sc32i(void)
 { SELECT_FUNC("generic", xtrxdsp_iq8_sc32i, no); }
 
@@ -301,6 +325,9 @@ static func_xtrxdsp_sc32_iq16_t resolve_xtrxdsp_sc32_iq16(void)
 
 static func_xtrxdsp_sc32i_iq16_t resolve_xtrxdsp_sc32i_iq16(void)
 { SELECT_FUNC("generic", xtrxdsp_sc32i_iq16, no); }
+
+static func_xtrxdsp_sc32i_iq16_t resolve_xtrxdsp_ic16i_iq16(void)
+{ SELECT_FUNC("generic", xtrxdsp_ic16i_iq16, no); }
 
 
 func_xtrxdsp_sc32_conv64_t resolve_xtrxdsp_sc32_conv64(void)
@@ -353,6 +380,12 @@ void xtrxdsp_iq16_sc32i(const int16_t *__restrict iq,
 						size_t bytes)
 __attribute__ ((ifunc ("resolve_xtrxdsp_iq16_sc32i")));
 
+void xtrxdsp_iq16_ic16i(const int16_t *__restrict iq,
+						int16_t *__restrict outa,
+						int16_t *__restrict outb,
+						size_t bytes)
+__attribute__ ((ifunc ("resolve_xtrxdsp_iq16_ic16i")));
+
 void xtrxdsp_iq8_sc32i(const int8_t *__restrict iq,
 					   float *__restrict outa,
 					   float *__restrict outb,
@@ -374,6 +407,11 @@ void xtrxdsp_sc32i_iq16(const float *__restrict i,
 						size_t outbytes)
 __attribute__ ((ifunc ("resolve_xtrxdsp_sc32i_iq16")));
 
+void xtrxdsp_ic16i_iq16(const int16_t *__restrict i,
+						const int16_t *__restrict q,
+						int16_t *__restrict out,
+						size_t outbytes)
+__attribute__ ((ifunc ("resolve_xtrxdsp_ic16i_iq16")));
 
 DECLARE_SC32_CONV64_FUNC() __attribute__ ((ifunc ("resolve_xtrxdsp_sc32_conv64")));
 

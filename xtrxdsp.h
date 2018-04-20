@@ -60,6 +60,12 @@ void xtrxdsp_init(void);
 	float scale, \
 	size_t bytes)
 
+#define DECLARE_IQ16_IC16I_FUNC(funcname) \
+	void xtrxdsp_iq16_ic16i_##funcname(const int16_t *__restrict iq, \
+	int16_t *__restrict outa, \
+	int16_t *__restrict outb, \
+	size_t bytes)
+
 #define DECLARE_IQ12_SC32I_FUNC(funcname) \
 	uint64_t xtrxdsp_iq12_sc32i_##funcname(const void *__restrict iq, \
 	float *__restrict outa, \
@@ -80,6 +86,11 @@ void xtrxdsp_init(void);
 	float scale, \
 	size_t bytes)
 
+#define DECLARE_IC16I_IQ16_FUNC(funcname) \
+	void xtrxdsp_ic16i_iq16_##funcname(const int16_t *__restrict i, \
+	const int16_t *__restrict q, \
+	int16_t *__restrict out, \
+	size_t bytes)
 
 #define DECLARE_IQ16_SC32_FUNC_TEMPLATE(funcname) \
 	DECLARE_IQ16_SC32_FUNC(funcname) { xtrxdsp_iq16_sc32_template(iq, out, scale, bytes); }
@@ -97,6 +108,9 @@ void xtrxdsp_init(void);
 #define DECLARE_IQ16_SC32I_FUNC_TEMPLATE(funcname) \
 	DECLARE_IQ16_SC32I_FUNC(funcname) { xtrxdsp_iq16_sc32i_template(iq, outa, outb, scale, bytes); }
 
+#define DECLARE_IQ16_IC16I_FUNC_TEMPLATE(funcname) \
+	DECLARE_IQ16_IC16I_FUNC(funcname) { xtrxdsp_iq16_ic16i_template(iq, outa, outb, bytes); }
+
 #define DECLARE_IQ12_SC32I_FUNC_TEMPLATE(funcname) \
 	DECLARE_IQ12_SC32I_FUNC(funcname) { return xtrxdsp_iq12_sc32i_template(iq, outa, outb, inbytes, prevstate); }
 
@@ -106,6 +120,8 @@ void xtrxdsp_init(void);
 #define DECLARE_SC32I_IQ16_FUNC_TEMPLATE(funcname) \
 	DECLARE_SC32I_IQ16_FUNC(funcname) { xtrxdsp_sc32i_iq16_template(i, q, out, scale, bytes); }
 
+#define DECLARE_IC16I_IQ16_FUNC_TEMPLATE(funcname) \
+	DECLARE_IC16I_IQ16_FUNC(funcname) { xtrxdsp_ic16i_iq16_template(i, q, out, bytes); }
 
 #define DECLARE_TEMPLATES(funcname)             \
 	DECLARE_IQ16_SC32_FUNC_TEMPLATE(funcname)   \
@@ -113,9 +129,11 @@ void xtrxdsp_init(void);
 	DECLARE_IQ8_SC32_FUNC_TEMPLATE(funcname)    \
 	DECLARE_SC32_IQ16_FUNC_TEMPLATE(funcname)   \
 	DECLARE_IQ16_SC32I_FUNC_TEMPLATE(funcname)  \
+	DECLARE_IQ16_IC16I_FUNC_TEMPLATE(funcname)  \
 	DECLARE_IQ12_SC32I_FUNC_TEMPLATE(funcname)  \
 	DECLARE_IQ8_SC32I_FUNC_TEMPLATE(funcname)   \
-	DECLARE_SC32I_IQ16_FUNC_TEMPLATE(funcname)
+	DECLARE_SC32I_IQ16_FUNC_TEMPLATE(funcname)  \
+	DECLARE_IC16I_IQ16_FUNC_TEMPLATE(funcname)
 
 
 
@@ -138,6 +156,10 @@ extern void xtrxdsp_iq16_sc32i(const int16_t *__restrict iq,
 							   float *__restrict outa,
 							   float *__restrict outb,
 							   float scale,
+							   size_t bytes);
+extern void xtrxdsp_iq16_ic16i(const int16_t *__restrict iq,
+							   int16_t *__restrict outa,
+							   int16_t *__restrict outb,
 							   size_t bytes);
 #if 0
 extern uint64_t xtrxdsp_iq12_sc32i(const void *__restrict iq,
@@ -163,6 +185,11 @@ extern void xtrxdsp_sc32i_iq16(const float *__restrict i,
 							   float scale,
 							   size_t outbytes);
 
+extern void xtrxdsp_ic16i_iq16(const int16_t *__restrict i,
+							   const int16_t *__restrict q,
+							   int16_t *__restrict out,
+							   size_t outbytes);
+
 /* non vector optimized version */
 DECLARE_IQ16_SC32_FUNC(no);
 DECLARE_IQ12_SC32_FUNC(no);
@@ -174,6 +201,9 @@ DECLARE_IQ8_SC32I_FUNC(no);
 
 DECLARE_SC32_IQ16_FUNC(no);
 DECLARE_SC32I_IQ16_FUNC(no);
+
+DECLARE_IC16I_IQ16_FUNC(no);
+DECLARE_IQ16_IC16I_FUNC(no);
 
 #define CONCAT(x, y) x##y
 
@@ -245,6 +275,10 @@ DECLARE_IQ8_SC32I_FUNC(sse2);
 
 DECLARE_SC32_IQ16_FUNC(sse2);
 DECLARE_SC32I_IQ16_FUNC(sse2);
+
+DECLARE_IC16I_IQ16_FUNC(sse2);
+DECLARE_IQ16_IC16I_FUNC(sse2);
+
 #endif
 
 #ifdef XTRXDSP_HAS__SSSE3__
@@ -272,6 +306,10 @@ DECLARE_IQ8_SC32I_FUNC(avx);
 
 DECLARE_SC32_IQ16_FUNC(avx);
 DECLARE_SC32I_IQ16_FUNC(avx);
+
+DECLARE_IC16I_IQ16_FUNC(avx);
+DECLARE_IQ16_IC16I_FUNC(avx);
+
 #endif
 
 /* AVX2   */
