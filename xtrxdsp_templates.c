@@ -268,6 +268,18 @@ void xtrxdsp_iq8_sc32_template(const int8_t *__restrict iq,
 }
 #endif
 
+#ifdef XTRXDSP_TEMPLATE_IQ8_IC16
+static inline
+void xtrxdsp_iq8_ic16_template(const int8_t *__restrict iq,
+								 int16_t *__restrict out,
+								 size_t bytes)
+{
+	for (; bytes > 0; bytes --) {
+		*(out++) = *(iq++) << 8;
+	}
+}
+#endif
+
 #ifdef XTRXDSP_TEMPLATE_IQ8_SC32I
 static inline
 void xtrxdsp_iq8_sc32i_template(const int8_t *__restrict iq,
@@ -299,6 +311,33 @@ void xtrxdsp_iq8_sc32i_template(const int8_t *__restrict iq,
 }
 #endif
 
+#ifdef XTRXDSP_TEMPLATE_IQ8_IC16I
+static inline
+void xtrxdsp_iq8_ic16i_template(const int8_t *__restrict iq,
+								 int16_t *__restrict outa,
+								 int16_t *__restrict outb,
+								 size_t bytes)
+{
+	for (; bytes > 2; bytes -= 2) {
+		*(outa++) = *(iq++) << 8;
+		*(outb++) = *(iq++) << 8;
+	}
+}
+#endif
+
+#ifdef XTRXDSP_TEMPLATE_IQ8_IC8I
+static inline
+void xtrxdsp_iq8_ic8i_template(const int8_t *__restrict iq,
+								 int8_t *__restrict outa,
+								 int8_t *__restrict outb,
+								 size_t bytes)
+{
+	for (; bytes > 2; bytes -= 2) {
+		*(outa++) = *(iq++);
+		*(outb++) = *(iq++);
+	}
+}
+#endif
 
 /*********************************************************************************************/
 /* SSE2 */
