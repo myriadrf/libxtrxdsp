@@ -331,40 +331,40 @@ func_xtrxdsp_bx_expand_t resolve_xtrxdsp_b4_expand_x4(void)
 #else
 
 static func_xtrxdsp_iq16_sc32_t resolve_xtrxdsp_iq16_sc32(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq16_sc32, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq16_sc32, no); }
 
 static func_xtrxdsp_iq12_sc32_t resolve_xtrxdsp_iq12_sc32(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq12_sc32, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq12_sc32, no); }
 
 static func_xtrxdsp_iq8_sc32_t resolve_xtrxdsp_iq8_sc32(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq8_sc32, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq8_sc32, no); }
 
 static func_xtrxdsp_iq8_ic16_t resolve_xtrxdsp_iq8_ic16(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq8_ic16, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq8_ic16, no); }
 
 static func_xtrxdsp_iq16_sc32i_t resolve_xtrxdsp_iq16_sc32i(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq16_sc32i, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq16_sc32i, no); }
 
 static func_xtrxdsp_iq16_ic16i_t resolve_xtrxdsp_iq16_ic16i(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq16_ic16i, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq16_ic16i, no); }
 
 static func_xtrxdsp_iq8_sc32i_t resolve_xtrxdsp_iq8_sc32i(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq8_sc32i, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq8_sc32i, no); }
 
 static func_xtrxdsp_sc32_iq16_t resolve_xtrxdsp_sc32_iq16(void)
-{ SELECT_FUNC("generic", xtrxdsp_sc32_iq16, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_sc32_iq16, no); }
 
 static func_xtrxdsp_sc32i_iq16_t resolve_xtrxdsp_sc32i_iq16(void)
-{ SELECT_FUNC("generic", xtrxdsp_sc32i_iq16, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_sc32i_iq16, no); }
 
-static func_xtrxdsp_sc32i_iq16_t resolve_xtrxdsp_ic16i_iq16(void)
-{ SELECT_FUNC("generic", xtrxdsp_ic16i_iq16, no); }
+static func_xtrxdsp_ic16i_iq16_t resolve_xtrxdsp_ic16i_iq16(void)
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_ic16i_iq16, no); }
 
 static func_xtrxdsp_iq8_ic16i_t resolve_xtrxdsp_iq8_ic16i(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq8_ic16i, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq8_ic16i, no); }
 
 static func_xtrxdsp_iq8_ic8i_t resolve_xtrxdsp_iq8_ic8i(void)
-{ SELECT_FUNC("generic", xtrxdsp_iq8_ic8i, no); }
+{ xtrxdsp_init(); SELECT_FUNC("generic", xtrxdsp_iq8_ic8i, no); }
 
 
 func_xtrxdsp_sc32_conv64_t resolve_xtrxdsp_sc32_conv64(void)
@@ -532,6 +532,21 @@ void xtrxdsp_sc32i_iq16(const float *__restrict i,
 						float scale,
 						size_t outbytes)
 { STATIC_RESOLVE(xtrxdsp_sc32i_iq16, i, q, out, scale, outbytes); }
+
+void xtrxdsp_iq8_ic16(const int8_t *__restrict a, int16_t *__restrict b, size_t c)
+{ STATIC_RESOLVE(xtrxdsp_iq8_ic16, a, b, c); }
+
+void xtrxdsp_iq16_ic16i(const int16_t *__restrict a, int16_t *__restrict b, int16_t *__restrict c, size_t d)
+{ STATIC_RESOLVE(xtrxdsp_iq16_ic16i, a, b, c, d); }
+
+void xtrxdsp_iq8_ic16i(const int8_t *__restrict a, int16_t *__restrict b, int16_t *__restrict c, size_t d)
+{ STATIC_RESOLVE(xtrxdsp_iq8_ic16i, a, b, c, d); }
+
+void xtrxdsp_iq8_ic8i(const int8_t *__restrict a, int8_t *__restrict b, int8_t *__restrict c, size_t d)
+{ STATIC_RESOLVE(xtrxdsp_iq8_ic8i, a, b, c, d); }
+
+void xtrxdsp_ic16i_iq16(const int16_t *__restrict a, const int16_t *__restrict b, int16_t *__restrict c, size_t d)
+{ STATIC_RESOLVE(xtrxdsp_ic16i_iq16, a, b, c, d); }
 
 DECLARE_SC32_CONV64_FUNC()
 { STATIC_RESOLVE(xtrxdsp_sc32_conv64, data, conv, out, count, decim_bits); }

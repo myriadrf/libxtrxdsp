@@ -18,12 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include "xtrxll_port.h"
 #include <errno.h>
 #include "xtrxdsp_filters.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-
 
 #define MAX_TAPS 64
 
