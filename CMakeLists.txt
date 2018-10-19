@@ -78,7 +78,7 @@ set(GENERIC_TUNE "")
 include_directories(".")
 
 set(XTRX_DSP_FILES xtrxdsp.c xtrxdsp_filters.c xtrxdsp_filters_data.c xtrxdsp_no.c)
-if(ARCH STREQUAL "x86")
+if(ARCH MATCHES "^x86.*")
     set(XTRX_DSP_FILES ${XTRX_DSP_FILES}
                        xtrxdsp_x86_sse2.c
                        xtrxdsp_x86_avx.c
