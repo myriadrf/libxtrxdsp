@@ -47,6 +47,16 @@ typedef void (*func_xtrxdsp_ic16i_iq16_t)(const int16_t *__restrict i, const int
 #include <stdbool.h>
 
 #if defined(__x86_64__) || defined(__i386__)
+#define GCC_VERSION (__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+
+#if GCC_VERSION > 50000
+#define RUNTIME_CHECK_FMA()  __builtin_cpu_supports("fma");
+#else
+#define RUNTIME_CHECK_FMA()  0
+#endif
+
 typedef struct cpu_features {
 	bool sse2;
 	bool sse41;
@@ -61,7 +71,7 @@ static void cpu_features_init(cpu_features_t* features)
 	features->sse2 = __builtin_cpu_supports("sse2");
 	features->sse41 = __builtin_cpu_supports("sse4.1");
 	features->avx = __builtin_cpu_supports("avx");
-	features->fma = __builtin_cpu_supports("fma");
+	features->fma = RUNTIME_CHECK_FMA();
 
 	INFORM("CPU Features: SSE2%c SSE4.1%c AVX%c FMA%c\n",
 		   features->sse2 ? '+' : '-',
