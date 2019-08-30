@@ -61,8 +61,8 @@ CONFIGURE_FILE(
 @ONLY)
 
 INSTALL(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/libxtrxdsp.pc
-	DESTINATION ${XTRXDSP_LIBRARY_DIR}/pkgconfig
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/libxtrxdsp.pc
+    DESTINATION ${XTRXDSP_LIBRARY_DIR}/pkgconfig
 )
 
 # Report all undfined symbols in shared libraries
@@ -77,7 +77,7 @@ set(GENERIC_TUNE "")
 
 include_directories(".")
 
-set(XTRX_DSP_FILES xtrxdsp.c xtrxdsp_filters.c xtrxdsp_filters_data.c xtrxdsp_no.c)
+set(XTRX_DSP_FILES xtrxdsp.c xtrxdsp_fft.c xtrxdsp_filters.c xtrxdsp_filters_data.c xtrxdsp_no.c)
 if(ARCH MATCHES "^x86.*")
     set(XTRX_DSP_FILES ${XTRX_DSP_FILES}
                        xtrxdsp_x86_sse2.c
@@ -104,7 +104,7 @@ add_subdirectory(tests)
 install(TARGETS xtrxdsp DESTINATION ${XTRXDSP_LIBRARY_DIR})
 
 install(FILES
-	xtrxdsp.h xtrxdsp_config.h xtrxdsp_filters.h
+    xtrxdsp.h xtrxdsp_config.h xtrxdsp_filters.h xtrxdsp_fft.h
     DESTINATION ${XTRXDSP_INCLUDE_DIR}
 )
 
