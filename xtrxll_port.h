@@ -57,10 +57,7 @@
 #include <limits.h>
 #include <errno.h>
 
-#if defined(__linux) || defined(__APPLE__)
-#include <pthread.h>
-#include <semaphore.h>
-#elif defined(_WIN32) || defined(_WIN32_WCE) || defined(__CYGWIN__)
+#if defined(_WIN32) || defined(_WIN32_WCE) || defined(__CYGWIN__)
 #include <windows.h>
 /** @ingroup threading
  * Basic emulation of posix threading and mutexes
@@ -190,7 +187,8 @@ static inline int posix_memalign(void **memptr, size_t alignment, size_t size) {
 #define ENAVAIL 1000
 
 #else
-#error Unknown platform
+#include <pthread.h>
+#include <semaphore.h>
 #endif
 
 /** @ingroup general
