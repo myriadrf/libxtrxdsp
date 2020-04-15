@@ -47,7 +47,7 @@
 
 #include <sys/types.h>
 
-#if defined(__linux) || defined(__APPLE__) || defined(__CYGWIN__)
+#if defined(__linux) || defined(__APPLE__) || defined(__CYGWIN__) || defined(__GLIBC__)
 #include <sys/time.h>
 #include <unistd.h>
 #include <endian.h>
