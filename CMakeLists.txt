@@ -51,9 +51,9 @@ endif()
 
 add_definitions(-Wall -g)
 
+set(XTRXDSP_RUNTIME_DIR      bin)
 set(XTRXDSP_LIBRARY_DIR      lib${LIB_SUFFIX})
 set(XTRXDSP_INCLUDE_DIR      include)
-set(XTRXDSP_UTILS_DIR        ${XTRXDSP_LIBRARY_DIR}/xtrxdsp)
 
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/libxtrxdsp.pc.in
@@ -101,7 +101,7 @@ add_subdirectory(tests)
 ########################################################################
 # install headers & targets
 ########################################################################
-install(TARGETS xtrxdsp DESTINATION ${XTRXDSP_LIBRARY_DIR})
+install(TARGETS xtrxdsp DESTINATION ${XTRXDSP_RUNTIME_DIR})
 
 install(FILES
     xtrxdsp.h xtrxdsp_config.h xtrxdsp_filters.h xtrxdsp_fft.h

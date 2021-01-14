@@ -11,4 +11,4 @@ add_executable(test_filter test_filter.c)
 target_link_libraries(test_filter xtrxdsp m ${SYSTEM_LIBS})
 
 
-install(TARGETS test_filter test_xtrxdsp_sc32i_iq16 DESTINATION ${XTRXDSP_UTILS_DIR})
+install(TARGETS test_filter test_xtrxdsp_sc32i_iq16 DESTINATION ${XTRXDSP_RUNTIME_DIR})
