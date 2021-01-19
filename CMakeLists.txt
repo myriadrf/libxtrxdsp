@@ -53,7 +53,7 @@ add_definitions(-Wall -g)
 
 set(XTRXDSP_LIBRARY_DIR      lib${LIB_SUFFIX})
 set(XTRXDSP_INCLUDE_DIR      include)
-set(XTRXDSP_UTILS_DIR        ${XTRXDSP_LIBRARY_DIR}/xtrxdsp)
+set(XTRXDSP_UTILS_DIR        bin)
 
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/libxtrxdsp.pc.in
