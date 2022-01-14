@@ -95,7 +95,7 @@ static void cpu_features_init(cpu_features_t* features)
 
 typedef struct cpu_features {
 	bool _nothing
-} cpu_features_t
+} cpu_features_t;
 
 static void cpu_features_init(cpu_features_t* features)
 {
