@@ -179,7 +179,7 @@ void xtrxdsp_init(void)
 #define CHECK_FUNC_SSE2(func)
 #endif
 
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__)
 
 static func_xtrxdsp_iq16_sc32_t resolve_xtrxdsp_iq16_sc32(void)
 {
